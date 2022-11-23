@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url("Bombs.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+
+}
+
+h1 {
+    margin-top: 50px;
+    color: rgb(245, 12, 12);
+    text-align: center;
+    font-family: 'Trebuchet MS';
+    font-size: xxx-large;
+}
+
+.cell {
+    border: 2px solid black;
+    background-color: rgb(134, 140, 144);
+    background-size: 100%;
+    font-weight: 700;
+}
+
+.closed {
+    background-color: rgb(104, 113, 104);
+}
+
+table {
+    margin: auto;
+    margin-top: 50px;
+}
+
+.board td {
+    width: 40px;
+    height: 40px;
+    margin: auto;
+    text-align: center;
+    transition: 0.25s;
+}
+
+.board td:hover {
+    background-color: rgb(86, 150, 166);
+}
+
+.copyright {
+    text-align: center;
+    margin-top: 280px;
+    color: antiquewhite;
+    font-size: x-large;
+}
