@@ -116,8 +116,5 @@ function cellClicked(elCell, i, j) {
 }
 
 function restartButton() {
-    gBoard = ''
-    var elModal = document.querySelector('.modal')
-    elModal.style.display = 'none'
-    onInIt()
+    window.location.reload()
 }
