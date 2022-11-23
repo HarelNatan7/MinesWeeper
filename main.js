@@ -43,7 +43,7 @@ function buildBoard() {
 }
 
 function getRandomMines() {
-    var minesNum = gLevel.SIZE
+    var minesNum = gLevel.MINES
     for (var i = 0; i <= minesNum; i++) {
         var currCell = drawCell()
         currCell.isMine = true
@@ -60,14 +60,16 @@ function drawCell() {
 
 function renderBoard(board) {
     var strHTML = ''
+    var className
     for (var i = 0; i < board.length; i++) {
         strHTML += '<tr>'
         for (var j = 0; j < board[0].length; j++) {
             var currCell = gBoard[i][j]
+            if (currCell.isMine) className = 'cell closed mine'
+            else className = 'cell closed'
             var minesCount = setMinesNegsCount(board, i, j)
-            currCell = (currCell.isMine) ? MINE : minesCount
-            var className = 'cell closed'
-            strHTML += `<td data-i="${i}" data-j="${j}" class="${className}" onclick="cellClicked(this, ${i},${j})" ></td>`
+            currCell.minesAroundCount = minesCount
+            strHTML += `<td data="${i}-${j}" class="${className}" onclick="cellClicked(this, ${i},${j})" ></td>`
         }
         strHTML += '</tr>'
     }
@@ -82,7 +84,7 @@ function setMinesNegsCount(board, rowIdx, colIdx) {
         for (var j = colIdx - 1; j <= colIdx + 1; j++) {
             if (i === rowIdx && j === colIdx) continue
             if (j < 0 || j >= board[0].length) continue
-            if (board[i][j].isMine) minesCountAround++
+            if (board[i][j].isMine) board[i][j].minesAroundCount = ++minesCountAround
         }
     }
     return minesCountAround
@@ -91,11 +93,31 @@ function setMinesNegsCount(board, rowIdx, colIdx) {
 function cellClicked(elCell, i, j) {
     var currCell = gBoard[i][j]
     var minesCount = setMinesNegsCount(gBoard, i, j)
+    var allMines = document.querySelectorAll('.mine')
+    console.log('elCell:', elCell)
     if (!currCell.isShown) {
-        elCell.classList.remove('closed')
+        // Model
         currCell.isShown = true
-        if (currCell.isMine) elCell.innerHTML = MINE
-        else if (minesCount === 0) elCell.innerHTML = ''
-        else elCell.innerHTML = minesCount
+        // DOM
+        elCell.classList.remove('closed')
+        if (currCell.isMine) {
+            allMines.forEach((td) => {
+                td.classList.remove('closed');
+                td.innerHTML = MINE
+              })
+            allMines.innerText = MINE
+            gGame.isOn = false
+            var elModal = document.querySelector('.modal')
+            elModal.style.display = 'block'
+        }
+        else if (currCell.minesAroundCount === 0) elCell.innerHTML = ''
+        else elCell.innerHTML = currCell.minesAroundCount
     }
+}
+
+function restartButton() {
+    gBoard = ''
+    var elModal = document.querySelector('.modal')
+    elModal.style.display = 'none'
+    onInIt()
 }

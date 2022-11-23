@@ -8,15 +8,30 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     height: 100vh;
-
 }
 
 h1 {
     margin-top: 50px;
-    color: rgb(245, 12, 12);
+    color: red;
     text-align: center;
     font-family: 'Trebuchet MS';
     font-size: xxx-large;
+}
+.modal {
+    margin:auto ;
+    margin-top: 10px;
+    height: 70px;
+    width: 200px;
+    border-radius: 25px;
+    background-color: #fff;
+    color: red;
+    text-align: center;
+    font-family: 'Trebuchet MS';
+    font-size: x-large;
+    display: none;
+}
+button {
+    cursor: pointer;
 }
 
 .cell {
@@ -32,7 +47,7 @@ h1 {
 
 table {
     margin: auto;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 .board td {
@@ -52,4 +67,13 @@ table {
     margin-top: 280px;
     color: antiquewhite;
     font-size: x-large;
+}
+
+.timer {
+    color: #fff;
+    margin: auto;
+    text-align: center;
+    height: 20px;
+    width: 50px;
+    background-color: black;
 }
