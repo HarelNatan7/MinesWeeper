@@ -24,6 +24,10 @@ button {
     border-radius: 50vw;
 }
 
+.timer {
+    font-size: 1.4rem;
+}
+
 .cell {
     border: 2px solid black;
     background-color: rgb(104, 113, 104);
@@ -39,6 +43,7 @@ button {
     font-size: 1.7rem;
     width: 65px;
     margin: 0 auto;
+    transition: 0.5s;
 }
 
 table {
@@ -85,5 +90,8 @@ table {
     align-items: center;
     justify-content: center;
     gap: 10px;
+}
 
+.lives {
+    font-size: 1.7rem;
 }
