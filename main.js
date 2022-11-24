@@ -16,6 +16,7 @@ var gLives
 var minutesLabel = document.getElementById("minutes");
 var secondsLabel = document.getElementById("seconds");
 var totalSeconds = 0
+
 var gLevel = {
     SIZE: 4,
     MINES: 2
@@ -128,6 +129,8 @@ function cellClicked(elCell, i, j) {
         elCell.classList.add('opened')
         gClicksNum++
         gGame.shownCount++
+        var sound = new Audio('Sound/click.wav')
+        sound.play()
         startTimer()
         checkVictory()
         if (currCell.isMine) {
@@ -139,6 +142,8 @@ function cellClicked(elCell, i, j) {
                 revealAllMine()
                 gGame.isOn = false
                 document.querySelector('.restart-btn').innerText = DEAD
+                var sound = new Audio('Sound/lose_minesweeper.wav')
+                sound.play()
                 clearInterval(gGameInterval)
             }
         } else if (currCell.minesAroundCount) renderCell(currCell, currCell.minesAroundCount)
@@ -192,6 +197,8 @@ function checkVictory() {
         gGame.isOn = false
         clearInterval(gGameInterval)
         document.querySelector('.restart-btn').innerText = WON
+        var sound = new Audio('Sound/win.wav')
+        sound.play()
     }
 }
 
