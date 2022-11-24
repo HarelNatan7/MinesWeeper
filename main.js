@@ -1,13 +1,5 @@
 'use strict'
 
-var gBoard
-var gGame
-var gSeconds = 0
-var gGameInterval
-var gClicksNum
-var gLives
-
-
 const MINE = '💣'
 const FLAG = '🚩'
 const DEAD = '😵'
@@ -15,6 +7,15 @@ const THINK = '🤔'
 const WON = '😎'
 const LIVE = '❤️‍🔥'
 
+var gBoard
+var gGame
+var gSeconds = 0
+var gGameInterval
+var gClicksNum
+var gLives
+var minutesLabel = document.getElementById("minutes");
+var secondsLabel = document.getElementById("seconds");
+var totalSeconds = 0
 var gLevel = {
     SIZE: 4,
     MINES: 2
@@ -31,7 +32,6 @@ function onInIt() {
     gBoard = buildBoard()
     getRandomMines()
     renderBoard(gBoard)
-    console.table(gBoard)
     minutesLabel.innerHTML = '00'
     secondsLabel.innerHTML = '00'
     totalSeconds = 0
@@ -39,53 +39,6 @@ function onInIt() {
     gLives = 3
     renderLives()
     document.querySelector('.restart-btn').innerText = THINK
-}
-
-function renderLives() {
-    document.querySelector('.lives').innerText = LIVE.repeat(gLives)
-}
-
-var minutesLabel = document.getElementById("minutes");
-var secondsLabel = document.getElementById("seconds");
-var totalSeconds = 0;
-
-function setTime() {
-    ++totalSeconds;
-    secondsLabel.innerHTML = pad(totalSeconds % 60);
-    minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
-}
-function pad(val) {
-    var valString = val + "";
-    if (valString.length < 2) {
-        return "0" + valString;
-    } else {
-        return valString;
-    }
-}
-
-function checkVictory() {
-    if (gGame.shownCount + gGame.markedMines === gLevel.SIZE * gLevel.SIZE) {
-        gGame.isOn = false
-        clearInterval(gGameInterval)
-        document.querySelector('.restart-btn').innerText = WON
-    }
-}
-
-function startTimer() {
-    if (gClicksNum === 1) gGameInterval = setInterval(setTime, 1000);
-}
-
-function changeLevel(el) {
-    if (el.innerText === "Beginner") {
-        gLevel.SIZE = 4
-        gLevel.MINES = 2
-    } else if (el.innerText === "Professional") {
-        gLevel.SIZE = 8
-        gLevel.MINES = 14
-    } else if (el.innerText === "Legendary") {
-        gLevel.SIZE = 12
-        gLevel.MINES = 32
-    }
 }
 
 function buildBoard() {
@@ -108,21 +61,6 @@ function buildBoard() {
     return board;
 }
 
-function getRandomMines() {
-    var minesNum = gLevel.MINES
-    for (var i = 0; i < minesNum; i++) {
-        var currCell = drawCell()
-        currCell.isMine = true
-    }
-}
-
-function drawCell() {
-    var randIdx = getRandomInt(0, gBoard.length)
-    var rand2ndIdx = getRandomInt(0, gBoard.length)
-    var randCell = gBoard[randIdx][rand2ndIdx]
-    return randCell
-}
-
 function renderBoard(board) {
     var strHTML = ''
     for (var i = 0; i < board.length; i++) {
@@ -134,13 +72,26 @@ function renderBoard(board) {
             var minesCount = setMinesNegsCount(board, i, j)
             currCell.minesAroundCount = minesCount
             strHTML += `<td data="${i}-${j}" class="cell ${className}"
-             onclick="cellClicked(this, ${i},${j})";
-              oncontextmenu="onRightClick(this, ${i},${j})" ></td>`
+            onclick="cellClicked(this, ${i},${j})";
+            oncontextmenu="onRightClick(this, ${i},${j})" ></td>`
         }
         strHTML += '</tr>'
     }
     const elBoard = document.querySelector('.board')
     elBoard.innerHTML = strHTML
+}
+
+function setMinesNegsCount(board, rowIdx, colIdx) {
+    var minesCountAround = 0
+    for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
+        if (i < 0 || i >= board.length) continue
+        for (var j = colIdx - 1; j <= colIdx + 1; j++) {
+            if (i === rowIdx && j === colIdx) continue
+            if (j < 0 || j >= board[0].length) continue
+            if (board[i][j].isMine) board[i][j].minesAroundCount = ++minesCountAround
+        }
+    }
+    return minesCountAround
 }
 
 function onRightClick(elCell, i, j) {
@@ -164,19 +115,6 @@ function onRightClick(elCell, i, j) {
         //DOM
         elCell.innerHTML = FLAG
     }
-}
-
-function setMinesNegsCount(board, rowIdx, colIdx) {
-    var minesCountAround = 0
-    for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
-        if (i < 0 || i >= board.length) continue
-        for (var j = colIdx - 1; j <= colIdx + 1; j++) {
-            if (i === rowIdx && j === colIdx) continue
-            if (j < 0 || j >= board[0].length) continue
-            if (board[i][j].isMine) board[i][j].minesAroundCount = ++minesCountAround
-        }
-    }
-    return minesCountAround
 }
 
 function cellClicked(elCell, i, j) {
@@ -229,6 +167,18 @@ function expandMines(board, rowIdx, colIdx) {
     }
 }
 
+function renderLives() {
+    document.querySelector('.lives').innerText = LIVE.repeat(gLives)
+}
+
+function getRandomMines() {
+    var minesNum = gLevel.MINES
+    for (var i = 0; i < minesNum; i++) {
+        var currCell = drawCell()
+        currCell.isMine = true
+    }
+}
+
 function revealAllMine() {
     var allMines = document.querySelectorAll('.mine')
     allMines.forEach((td) => {
@@ -237,9 +187,56 @@ function revealAllMine() {
     })
 }
 
+function checkVictory() {
+    if (gGame.shownCount + gGame.markedMines === gLevel.SIZE * gLevel.SIZE) {
+        gGame.isOn = false
+        clearInterval(gGameInterval)
+        document.querySelector('.restart-btn').innerText = WON
+    }
+}
+
+function changeLevel(el) {
+    if (el.innerText === "Beginner") {
+        gLevel.SIZE = 4
+        gLevel.MINES = 2
+    } else if (el.innerText === "Professional") {
+        gLevel.SIZE = 8
+        gLevel.MINES = 14
+    } else if (el.innerText === "Legendary") {
+        gLevel.SIZE = 12
+        gLevel.MINES = 32
+    }
+}
+
 function restartButton() {
     clearInterval(gGameInterval)
     gClicksNum = 0
     document.querySelector('.restart-btn').innerText = THINK
     onInIt()
+}
+
+function drawCell() {
+    var randIdx = getRandomInt(0, gBoard.length)
+    var rand2ndIdx = getRandomInt(0, gBoard.length)
+    var randCell = gBoard[randIdx][rand2ndIdx]
+    return randCell
+}
+
+function startTimer() {
+    if (gClicksNum === 1) gGameInterval = setInterval(setTime, 1000);
+}
+
+function setTime() {
+    ++totalSeconds;
+    secondsLabel.innerHTML = pad(totalSeconds % 60);
+    minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+}
+
+function pad(val) {
+    var valString = val + "";
+    if (valString.length < 2) {
+        return "0" + valString;
+    } else {
+        return valString;
+    }
 }

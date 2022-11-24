@@ -26,13 +26,15 @@ button {
 
 .timer {
     font-size: 1.4rem;
+    font-family: 'Trebuchet MS';
 }
 
 .cell {
     border: 2px solid black;
+    gap: 0% ;
     background-color: rgb(104, 113, 104);
     background-size: 100%;
-    font-weight: 700;
+    font-weight: 900;
 }
 
 .opened {
@@ -48,7 +50,7 @@ button {
 
 table {
     margin: auto;
-    margin-top: 20px;
+    margin-top: 20px
 }
 
 .board td {
@@ -64,14 +66,15 @@ table {
 }
 
 .copyright {
-    text-align: center;
-    margin-top: 200px;
-    position: absolute;
+    /* text-align: center;
+    padding: 50px auto; */
+    /* position: absolute; */
+    color: #fff;
     font-size: x-large;
-    bottom: 50px;
+    /* bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
-    color: antiquewhite;
+    color: antiquewhite; */
 }
 
 .panel-container {
