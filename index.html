@@ -7,23 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>💣 MineSweeper 💣</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="lose.png">
 </head>
 
 <body onload="onInIt()">
     <h1>Lets Play</h1>
     <div class="panel-container">
         <div class="timer">
-            00:00
+            <label id="minutes">00</label>:<label id="seconds">00</label>
+        </div>
+        <button class="restart-btn" onclick="restartButton()">🤔</button> 
+        <div class="levels">
+            <button class="b1" onclick="changeLevel(this); onInIt();">Beginner</button>
+            <button class="b2" onclick="changeLevel(this); onInIt();">Professional</button>
+            <button class="b3" onclick="changeLevel(this); onInIt();">Legendary</button>
         </div>
     </div>
 
     <table oncontextmenu="return false">
         <tbody class="board"></tbody>
     </table>
-
-    <div class="modal">You Lost!<br>
-        <button onclick="restartButton()">Play Again</button>
-    </div>
 
     <div class="copyright">By Harel Natan ©</div>
 
