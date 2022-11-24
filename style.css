@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+
 }
 
 body {
@@ -16,6 +17,7 @@ h1 {
     text-align: center;
     font-family: 'Trebuchet MS';
     font-size: xxx-large;
+    text-shadow: #FC0 1px 0 10px;
 }
 
 .copyright {
@@ -87,6 +89,19 @@ table {
     align-items: center;
     justify-content: center;
     gap: 10px;
+}
+
+.b1 {
+    font-weight: 900;
+    background-color: rgb(186, 134, 113);
+}
+
+.b2 {
+    font-weight: 900;
+}
+
+.b3 {
+    font-weight: 900;
 }
 
 .lives {

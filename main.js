@@ -204,14 +204,23 @@ function checkVictory() {
 
 function changeLevel(el) {
     if (el.innerText === "Beginner") {
+        el.style.backgroundColor = 'rgb(186, 134, 113)'
         gLevel.SIZE = 4
         gLevel.MINES = 2
+        document.querySelector('.b2').style.backgroundColor = 'lightgray'
+        document.querySelector('.b2').style.backgroundColor = 'lightgray'
     } else if (el.innerText === "Professional") {
+        el.style.backgroundColor = 'rgb(186, 134, 113)'
         gLevel.SIZE = 8
         gLevel.MINES = 14
+        document.querySelector('.b1').style.backgroundColor = 'lightgray'
+        document.querySelector('.b3').style.backgroundColor = 'lightgray'
     } else if (el.innerText === "Legendary") {
+        el.style.backgroundColor = 'rgb(186, 134, 113)'
         gLevel.SIZE = 12
         gLevel.MINES = 32
+        document.querySelector('.b1').style.backgroundColor = 'lightgray'
+        document.querySelector('.b2').style.backgroundColor = 'lightgray'
     }
 }
 
