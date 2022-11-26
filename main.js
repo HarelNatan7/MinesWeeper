@@ -166,9 +166,9 @@ function cellClicked(elCell, i, j) {
             renderCell(currCell, currCell.minesAroundCount) // When clicking on cell with Negs only show the Num
         }
         else expandMines(gBoard, i, j) // When clicking on cell without Negs, start the Show 😎
-        checkVictory() // Another check for win
     }
     isFirstClick = false
+    checkVictory() // Another check for win
 }
 
 function revealNegs(cellI, cellJ) {
